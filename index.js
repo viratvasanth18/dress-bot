@@ -5,10 +5,10 @@ const qrcode = require('qrcode-terminal');
 
 // Shop Configuration
 const SHOP_INFO = {
-  name: "சரவணகுமார் டிரஸ் வேர்ல்ட்",
-  address: "15, பஜார் வீதி, கோயம்புத்தூர்",
+  name: "Saravanakumar Dress World",
+  address: "15, Bazaar Street, Coimbatore",
   phone: "8610820043",
-  workingHours: "காலை 9:00 - இரவு 9:00",
+  workingHours: "9:00 AM - 9:00 PM",
   location: "https://maps.app.goo.gl/example"
 };
 
@@ -16,28 +16,28 @@ const SHOP_INFO = {
 const PRODUCTS = {
   '1': {
     id: '1',
-    name: 'சேலை',
+    name: 'Saree',
     price: 1200,
-    description: 'பட்டு சேலை - பல வண்ணங்கள்',
+    description: 'Silk Saree - Multiple Colors',
     image: './assets/products/lehenga1.jpg'
   },
   '2': {
     id: '2',
-    name: 'சல்வார் கமீஸ்',
+    name: 'Salwar Kameez',
     price: 1500,
-    description: 'டிசைன் சல்வார் கமீஸ்',
+    description: 'Designer Salwar Kameez',
     image: './assets/products/lehenga2.jpg'
   },
   '3': {
     id: '3',
-    name: 'பேன்ட் & சட்டை',
+    name: 'Pant & Shirt',
     price: 999,
-    description: 'அழகான ஃபார்மல் அணிவகை',
+    description: 'Elegant Formal Wear',
     image: './assets/products/lehenga3.jpg'
   }
 };
 
-// Initialize Client with enhanced settings
+// Initialize Client
 const client = new Client({
   authStrategy: new LocalAuth({ 
     dataPath: './sessions',
@@ -62,7 +62,7 @@ const client = new Client({
 
 client.on('qr', qr => {
   qrcode.generate(qr, { small: true });
-  console.log('QR ஸ்கேன் செய்யவும்...');
+  console.log('📸 Scan the QR Code...');
 });
 
 client.on('authenticated', () => {
@@ -70,22 +70,25 @@ client.on('authenticated', () => {
 });
 
 client.on('auth_failure', msg => {
-  console.error('❌ Auth failure:', msg);
+  console.error('❌ Authentication failed:', msg);
   notifyAdmin('🔴 Authentication failed!');
 });
 
 client.on('ready', () => {
-  console.log('🤖 Saravanakumar Dress World Bot Ready!');
-  notifyAdmin(`🟢 ${SHOP_INFO.name} போட் தயார்!\n📅 ${new Date().toLocaleString()}`);
+  console.log('🤖 Saravanakumar Dress World Bot is Ready!');
+  notifyAdmin(`🟢 ${SHOP_INFO.name} Bot is Ready!\n📅 ${new Date().toLocaleString('en-IN')}`);
 });
 
 client.on('disconnected', (reason) => {
   console.log('🔌 Disconnected:', reason);
-  notifyAdmin(`⚠️ Bot disconnected: ${reason}\nAttempting reconnect...`);
-  setTimeout(() => client.initialize(), 5000);
+  notifyAdmin(`⚠️ Bot disconnected: ${reason}\nServer will restart.`);
+  process.exit(1); // Let Railway automatically restart
 });
 
-// Enhanced message handler with debugging
+// ======================
+// Message Handler
+// ======================
+
 client.on('message', async message => {
   console.log('📩 Received:', message.body);
   
@@ -93,23 +96,18 @@ client.on('message', async message => {
   const sender = message.from;
 
   try {
-    // Handle both English and Tamil commands
-    if (['hi', 'menu', 'வணக்கம்', 'மெனு'].includes(text)) {
+    if (['hi', 'menu'].includes(text)) {
       return await showMainMenu(sender);
     }
-    
-    if (['1', 'products', 'பொருட்கள்'].includes(text)) {
+    if (['1', 'products'].includes(text)) {
       return await showProducts(sender);
     }
-    
-    if (['3', 'contact', 'தொடர்பு'].includes(text)) {
+    if (['3', 'contact'].includes(text)) {
       return await showContact(sender);
     }
-    
-    if (['4', 'offers', 'சலுகைகள்'].includes(text)) {
+    if (['4', 'offers'].includes(text)) {
       return await showOffers(sender);
     }
-    
     if (text.startsWith('p')) {
       const productId = text.substring(1);
       return await showProductDetails(sender, productId);
@@ -117,42 +115,42 @@ client.on('message', async message => {
 
     // Default reply
     await reply(sender,
-      '🙏 வணக்கம்!\n' +
-      'எங்கள் டிரஸ் கடைக்கு வரவேற்கிறோம்.\n\n' +
-      '📌 உதவிக்கு *hi* அனுப்பவும்\n' +
-      '👕 பொருட்களைப் பார்க்க *1* அனுப்பவும்'
+      '🙏 Welcome!\n' +
+      'Thanks for contacting Saravanakumar Dress World.\n\n' +
+      '📌 Send *hi* for menu\n' +
+      '👕 Send *1* to view products'
     );
     
   } catch (error) {
-    console.error('❌ Message error:', error);
-    await reply(sender, '⚠️ தவறு ஏற்பட்டுள்ளது. பிறகு முயற்சிக்கவும்.');
+    console.error('❌ Message handling error:', error);
+    await reply(sender, '⚠️ Something went wrong. Please try again later.');
   }
 });
 
 // ======================
-// Shop Functions (Improved)
+// Shop Functions
 // ======================
 
 async function showMainMenu(chatId) {
-  const menu = `👕 *${SHOP_INFO.name}* - முதன்மை மெனு\n
-1. 👗 பொருட்களைப் பார்க்க
-2. 🛒 என் ஆர்டர்
-3. 📞 எங்களைத் தொடர்பு கொள்ள
-4. 🎉 சலுகைகள்
+  const menu = `👕 *${SHOP_INFO.name}* - Main Menu\n
+1. 👗 View Products
+2. 🛒 My Order
+3. 📞 Contact Us
+4. 🎉 Offers
 
-📌 உதவிக்கு *hi* அனுப்பவும்`;
+📌 Send *hi* for menu`;
   await reply(chatId, menu);
 }
 
 async function showProducts(chatId) {
-  let productsList = `👗 *${SHOP_INFO.name} - எங்கள் பொருட்கள்*\n\n`;
+  let productsList = `👗 *${SHOP_INFO.name} - Our Products*\n\n`;
   
   Object.values(PRODUCTS).forEach(product => {
     productsList += `*${product.id}*: ${product.name} - ₹${product.price}\n`;
     productsList += `💎 ${product.description}\n\n`;
   });
   
-  productsList += 'ஒரு பொருளைப் பார்க்க *p<number>* அனுப்பவும் (எ.கா: p1)';
+  productsList += 'To view a product, send *p<number>* (e.g., p1)';
   await reply(chatId, productsList);
 }
 
@@ -160,55 +158,53 @@ async function showProductDetails(chatId, productId) {
   const product = PRODUCTS[productId];
   
   if (!product) {
-    return await reply(chatId, '❌ தவறான பொருள் ID. மீண்டும் முயற்சிக்கவும்.');
+    return await reply(chatId, '❌ Invalid product ID. Please try again.');
   }
 
   try {
-    // Try to send image
     if (fs.existsSync(product.image)) {
       const media = MessageMedia.fromFilePath(product.image);
       await client.sendMessage(chatId, media, { 
-        caption: `*${product.name}*\n💰 விலை: ₹${product.price}\n📝 ${product.description}`
+        caption: `*${product.name}*\n💰 Price: ₹${product.price}\n📝 ${product.description}`
       });
     } else {
       await reply(chatId, 
-        `*${product.name}*\n💰 விலை: ₹${product.price}\n📝 ${product.description}`
+        `*${product.name}*\n💰 Price: ₹${product.price}\n📝 ${product.description}`
       );
     }
-    
-    // Add call-to-action
+
     await reply(chatId,
-      `🛒 ஆர்டர் செய்ய:\n` +
-      `📞 ${SHOP_INFO.phone} ஐ தொடர்பு கொள்ளவும்\n\n` +
-      `📍 எங்கள் கடை: ${SHOP_INFO.address}\n` +
-      `🕒 நேரம்: ${SHOP_INFO.workingHours}`
+      `🛒 To place an order:\n` +
+      `📞 Contact: ${SHOP_INFO.phone}\n\n` +
+      `📍 Visit us: ${SHOP_INFO.address}\n` +
+      `🕒 Working Hours: ${SHOP_INFO.workingHours}`
     );
     
   } catch (error) {
-    console.error('❌ Product error:', error);
-    await reply(chatId, '⚠️ பொருளைக் காட்ட முடியவில்லை. பிறகு முயற்சிக்கவும்.');
+    console.error('❌ Product sending error:', error);
+    await reply(chatId, '⚠️ Unable to display product details. Please try again.');
   }
 }
 
 async function showContact(chatId) {
   await reply(chatId, 
     `📞 *${SHOP_INFO.name}*\n\n` +
-    `📍 முகவரி: ${SHOP_INFO.address}\n` +
-    `📱 போன்: ${SHOP_INFO.phone}\n` +
-    `🕒 நேரம்: ${SHOP_INFO.workingHours}\n\n` +
-    `🗺️ இருப்பிடம்: ${SHOP_INFO.location}\n\n` +
-    `🚚 இலவச விநியோகம் ₹3000+ ஆர்டர்களுக்கு`
+    `📍 Address: ${SHOP_INFO.address}\n` +
+    `📱 Phone: ${SHOP_INFO.phone}\n` +
+    `🕒 Working Hours: ${SHOP_INFO.workingHours}\n\n` +
+    `🗺️ Location: ${SHOP_INFO.location}\n\n` +
+    `🚚 Free delivery for orders above ₹3000`
   );
 }
 
 async function showOffers(chatId) {
   await reply(chatId,
-    `🎉 *${SHOP_INFO.name} - தற்போதைய சலுகைகள்*\n\n` +
-    `1. 15% தள்ளுபடி அனைத்து சேலைகளிலும்\n` +
-    `2. ₹3000+ ஆர்டர்களுக்கு இலவச விநியோகம்\n` +
-    `3. 2 சல்வார் கமீஸ் வாங்கினால் 1 சேலை இலவசம்\n\n` +
-    `⏰ சலுகை காலம்: 31-12-2023 வரை\n\n` +
-    `📞 ஆர்டர் செய்ய: ${SHOP_INFO.phone}`
+    `🎉 *${SHOP_INFO.name} - Current Offers*\n\n` +
+    `1. 15% Discount on all Sarees\n` +
+    `2. Free Delivery on orders above ₹3000\n` +
+    `3. Buy 2 Salwar Kameez & Get 1 Saree Free\n\n` +
+    `⏰ Offer valid till: 31-12-2023\n\n` +
+    `📞 Contact to order: ${SHOP_INFO.phone}`
   );
 }
 

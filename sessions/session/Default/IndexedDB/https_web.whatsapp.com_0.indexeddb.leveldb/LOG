@@ -1,0 +1,32 @@
+2025/04/25-10:52:41.643 4e80 Reusing MANIFEST D:\whatsapp\sessions\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2025/04/25-10:52:41.644 4e80 Recovering log #195
+2025/04/25-10:52:41.652 4e80 Reusing old log D:\whatsapp\sessions\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000195.log 
+2025/04/25-10:52:42.834 344 Compacting 1@1 + 5@2 files
+2025/04/25-10:52:42.901 344 Generated table #198@1: 43370 keys, 2198076 bytes
+2025/04/25-10:52:42.950 344 Generated table #199@1: 52734 keys, 2221340 bytes
+2025/04/25-10:52:42.996 344 Generated table #200@1: 36908 keys, 2198459 bytes
+2025/04/25-10:52:43.005 344 Generated table #201@1: 9005 keys, 165162 bytes
+2025/04/25-10:52:43.005 344 Compacted 1@1 + 5@2 files => 6783037 bytes
+2025/04/25-10:52:43.007 344 compacted to: files[ 0 0 4 0 0 0 0 ]
+2025/04/25-10:52:43.007 344 Delete type=2 #188
+2025/04/25-10:52:43.007 344 Delete type=2 #191
+2025/04/25-10:52:43.007 344 Delete type=2 #192
+2025/04/25-10:52:43.007 344 Delete type=2 #193
+2025/04/25-10:52:43.007 344 Delete type=2 #194
+2025/04/25-10:52:43.007 344 Delete type=2 #196
+2025/04/25-10:52:43.583 4d78 Level-0 table #203: started
+2025/04/25-10:52:43.587 4d78 Level-0 table #203: 93017 bytes OK
+2025/04/25-10:52:43.589 4d78 Delete type=0 #195
+2025/04/25-10:52:43.589 4d78 Manual compaction at level-0 from '\x00\x1d\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x1e\x00\x00\x00' @ 0 : 0; will stop at (end)
+2025/04/25-10:52:44.962 4d78 Compacting 1@1 + 4@2 files
+2025/04/25-10:52:45.020 4d78 Generated table #204@1: 44048 keys, 2199368 bytes
+2025/04/25-10:52:45.105 4d78 Generated table #205@1: 52177 keys, 2219718 bytes
+2025/04/25-10:52:45.152 4d78 Generated table #206@1: 38694 keys, 2199519 bytes
+2025/04/25-10:52:45.161 4d78 Generated table #207@1: 7177 keys, 132244 bytes
+2025/04/25-10:52:45.161 4d78 Compacted 1@1 + 4@2 files => 6750849 bytes
+2025/04/25-10:52:45.163 4d78 compacted to: files[ 0 0 4 0 0 0 0 ]
+2025/04/25-10:52:45.163 4d78 Delete type=2 #198
+2025/04/25-10:52:45.163 4d78 Delete type=2 #199
+2025/04/25-10:52:45.163 4d78 Delete type=2 #200
+2025/04/25-10:52:45.163 4d78 Delete type=2 #201
+2025/04/25-10:52:45.163 4d78 Delete type=2 #203

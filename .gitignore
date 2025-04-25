@@ -1,0 +1,35 @@
+# Node.js modules
+node_modules/
+
+# Session files (WhatsApp bot)
+sessions/
+session_backups/
+
+# Environment variables
+.env
+.env.*
+
+# Log files
+*.log
+logs/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Cache
+.webjs_cache/
